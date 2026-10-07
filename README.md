@@ -1,8 +1,8 @@
 # 仙宫云 HuggingFace 镜像下载脚本
 
-在 [仙宫云](https://www.x-gpu.com) GPU 实例上，通过镜像 `http://hf.x-gpu.com` 拉取 Hugging Face 模型，并按远端目录结构落到本地。
+在 [仙宫云](https://www.xiangongyun.com/) GPU 实例上，通过镜像 `http://hf.x-gpu.com` 拉取 Hugging Face 模型，并按远端目录结构落到本地。
 
-`hf download` + `HF_ENDPOINT=http://hf.x-gpu.com` 对部分仓库（尤其是 `Qwen/Qwen-Image-2.1`）会失败；`download-hf-mirror.sh` 用 Hub API 递归列文件 + `wget -nc` 从镜像拉取，作为可靠兜底。
+`hf download` + `HF_ENDPOINT=http://hf.x-gpu.com` 对部分仓库（比如 `Qwen/Qwen-Image-2.1`）会失败；`download-hf-mirror.sh` 用 Hub API 递归读取仓库文件，生成 + `wget -nc` 命令。
 
 ## 依赖
 
@@ -28,9 +28,9 @@ http://hf.x-gpu.com/Qwen/Qwen-Image-2.1/resolve/main/model_index.json
 
 ## 环境说明（仙宫云）
 
-- 在 GPU 实例上运行（本机/代理环境通常解析不到 `hf.x-gpu.com`）。
-- 公开仓库无需 Hugging Face token；列举优先走 `https://huggingface.co/api/...`，失败时再试镜像 API。
-- 模型布局（带 org 前缀）：`/root/ai-stack/models/{org}/{name}`。
+- 在 GPU 实例上运行。
+- 公开仓库无需 Hugging Face token；使用 `https://huggingface.co/api/...`。
+- 模型目录：`/root/ai-stack/models/{org}/{name}`。
 
 ## 1. 验证：列出文件与镜像 URL
 
@@ -62,7 +62,7 @@ pip install "huggingface_hub[cli]"
 ./init-models.sh
 ```
 
-顺序与落盘：
+顺序与存储路径：
 
 | # | Repo | 方式 | Local dir |
 |---|------|------|-----------|

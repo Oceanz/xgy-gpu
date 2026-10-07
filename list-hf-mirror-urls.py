@@ -80,6 +80,7 @@ def main() -> int:
     files.sort()
 
     print(f"# repo={repo_id} branch={branch} api={api_base} count={len(files)}", file=sys.stderr)
+    print('-' * 80)
     for path in files:
         url = f"{mirror}/{repo_id}/resolve/{branch}/{path}"
         print(f"{path}\t{url}")
